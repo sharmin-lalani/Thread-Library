@@ -91,8 +91,8 @@ not used as a thread context.
 mythreadextra.h overcomes these restrictions:
 1. It works correctly when threads do not end with MyThreadExit.
 2. It provides a routine 'int MyThreadInitExtra(void)' that initializes the threads package and
-converts the UNIX process context into a MyThread context.
-...
+converts the UNIX process context into a MyThread context.  
+...  
 MyThreadInitExtra(...);  
 // code here runs in thread context.  
 // it is the root or "oldest ancestor" thread  
