@@ -37,18 +37,18 @@ function. Do not allow functions to “fall out” of the start function.
 
 ## Semaphore routines
 
-MySemaphore MySemaphoreInit(int initialValue)
+MySemaphore MySemaphoreInit(int initialValue)  
 Create a semaphore. Set the initial value to initialValue, which must be nonnegative.
 A positive initial value has the same effect as invoking
 MySemaphoreSignal the same number of times. On error it returns NULL.
 
-void MySemaphoreSignal(MySemaphore sem)
+void MySemaphoreSignal(MySemaphore sem)  
 Signal semaphore sem. The invoking thread is not pre‐empted.
 
-void MySemaphoreWait(MySemaphore sem)
+void MySemaphoreWait(MySemaphore sem)  
 Wait on semaphore sem.
 
-int MySemaphoreDestroy(MySemaphore sem)
+int MySemaphoreDestroy(MySemaphore sem)  
 Destroy semaphore sem. Do not destroy semaphore if any threads are blocked
 on the queue. Return 0 on success, ‐1 on failure.
 
