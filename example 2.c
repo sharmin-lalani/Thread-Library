@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../mythread.h"
+#include "mythread.h"
 
 MySemaphore sem1, sem2;
 void t4(void *d);
