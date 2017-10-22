@@ -12,13 +12,13 @@
 #define THREAD_STACK_SIZE 8192 // our thread stack is 8KB in size
 int no_of_threads = 0; // number of threads in the process
 struct _MyThread *curr_thread = NULL; /* curr_thread is updated every time we call swapcontext or setcontext.
-									   * We are assuming this library will only execute in a single‐threaded (OS) process. 
-									   * An internal thread operation cannot be interrupted by another thread operation.
-									   * E.g., MyThreadCreate will not be interrupted by MyThreadYield.
-									   * That means the library does not have to acquire locks to protect 
-									   * the internal data of the thread library.
-									   * A user may still have to acquire semaphores to protect user data.
-									   */
+					* We are assuming this library will only execute in a single‐threaded (OS) process. 
+					* An internal thread operation cannot be interrupted by another thread operation.
+					* E.g., MyThreadCreate will not be interrupted by MyThreadYield.
+					* That means the library does not have to acquire locks to protect 
+					* the internal data of the thread library.
+					* A user may still have to acquire semaphores to protect user data.
+					*/
 ucontext_t init_context;
 
 
@@ -37,8 +37,8 @@ struct _MyThread* make_new_thread(void) {
 				handle_error("failed to allocate memory for thread");
 
 		t->thread_id = ++no_of_threads; /* Derive thread_id from a global thread counter
-										 * Note: Thread counter has to start from 1 as 0 is reserved for a special purpose.
-										 */
+						* Note: Thread counter has to start from 1 as 0 is reserved for a special purpose.
+						*/
 
 		t->parent = curr_thread; // For the initial thread, parent will be NULL.
 		t->no_of_active_children = 0;
@@ -58,8 +58,8 @@ struct _MyThread* make_new_thread(void) {
 		exit_context->uc_stack.ss_sp = exit_stack;
 		exit_context->uc_stack.ss_size = THREAD_STACK_SIZE;
 		t->uctx.uc_link = exit_context; /* This field points to the next context to execute after the current context.
-										 * We want the Thread to execute the exit routine after executing start_funct.
-										 */
+						* We want the Thread to execute the exit routine after executing start_funct.
+						*/
 		exit_context->uc_link = NULL;	
 		return t;
 } 
@@ -129,8 +129,8 @@ int MyThreadJoin(MyThread thread) {
 		prev->blocked_on_child = t->thread_id;
 		enqueue(prev, &BlockL);
 		curr_thread = dequeue(&ReadyQ);  /* TO DO: do we need to check if the ready queue is empty? 
-										  * Will this condition exist? blocked queue non-empty and ready queue empty?
-										  */
+						  * Will this condition exist? blocked queue non-empty and ready queue empty?
+						  */
 		if (curr_thread == NULL)
 				setcontext(&init_context);
 
@@ -165,8 +165,8 @@ void MyThreadJoinAll(void) {
 		prev->blocked_on_child = 0;
 		enqueue(prev, &BlockL);
 		curr_thread = dequeue(&ReadyQ);  /* TO DO: do we need to check if the ready queue is empty? 
-										  * Will this condition exist? blocked queue non-empty and ready queue empty?
-										  */
+						  * Will this condition exist? blocked queue non-empty and ready queue empty?
+						  */
 
 		if (curr_thread == NULL) 
 				setcontext(&init_context);
@@ -223,9 +223,9 @@ void MyThreadExit(void) {
 		free(curr_thread);
 
 		curr_thread = dequeue(&ReadyQ);  /* This should ideally never be NULL for the extra credit option,
-										  * as main thread is always the last to execute,
-										  * and main thread has a separate exit function.
-										  */
+						  * as main thread is always the last to execute,
+						  * and main thread has a separate exit function.
+						  */
 		if (curr_thread == NULL) {
 				//printf("Ready Q empty, going back to main\n");
 				setcontext(&init_context);
